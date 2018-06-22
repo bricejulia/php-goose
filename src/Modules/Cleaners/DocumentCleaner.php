@@ -82,7 +82,7 @@ class DocumentCleaner extends AbstractModule implements ModuleInterface {
 
             return $node->parent()->is('p');
         });
-        $this->convertToParagraph('div, span, article');
+        $this->convertToParagraph('div, article');
 
         return $this;
     }
