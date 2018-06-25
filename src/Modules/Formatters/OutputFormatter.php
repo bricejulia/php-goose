@@ -21,7 +21,7 @@ class OutputFormatter extends AbstractModule implements ModuleInterface {
     protected static $SIBLING_BASE_LINE_SCORE = 0.30;
 
     /** @var string */
-    protected static $CLEANUP_IGNORE_SELECTOR = ':not(p):not(strong):not(h1):not(h2):not(h3):not(h4):not(h5):not(h6):not(div)';
+    protected static $CLEANUP_IGNORE_SELECTOR = ':not(p):not(strong):not(h1):not(h2):not(h3):not(h4):not(h5):not(h6):not(div):not(ul)';
 
     /** @inheritdoc */
     public function run(Article $article) {
@@ -167,7 +167,7 @@ class OutputFormatter extends AbstractModule implements ModuleInterface {
             foreach ($items as $item) {
                 $item->replaceWith(new Text($this->getTagCleanedText($item)));
             }
-            
+
 //            $headers = $topNode->find('h1, h2, h3, h4, h5, h6');
 //
 //            foreach ($headers as $header) {
