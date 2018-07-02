@@ -47,6 +47,7 @@ class OutputFormatter extends AbstractModule implements ModuleInterface {
         $this->convertLinksToText($this->article()->getTopNode());
         $this->replaceTagsWithText($this->article()->getTopNode());
         $this->removeParagraphsWithFewWords($this->article()->getTopNode());
+        $this->fixImgWithRelativeSrc($this->article()->getTopNode(), $this->article()->getDomain());
 
         return $this->convertToText($this->article()->getTopNode());
     }
@@ -173,6 +174,26 @@ class OutputFormatter extends AbstractModule implements ModuleInterface {
 //            foreach ($headers as $header) {
 //                $header->replaceWith(new Text("\n\n" . $this->getTagCleanedText($header) . "\n\n"));
 //            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param Element $topNode
+     *
+     * @return OutputFormatter
+     */
+    private function fixImgWithRelativeSrc(Element $topNode, string $domain): self
+    {
+        if (!empty($topNode)) {
+            $items = $topNode->find('img');
+
+            foreach ($items as $item) {
+                if (strpos($item->attr('src'), '/') === 0) {
+                    $item->setAttr('src', '//'.$domain.$item->attr('src'));
+                }
+            }
         }
 
         return $this;
